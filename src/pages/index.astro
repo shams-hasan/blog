@@ -6,8 +6,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('blog');
+
 const posts = allPosts
-    .filter(post => !['markdown-style-guide', 'using-mdx'].includes(post.slug))
+    .filter(post => !['markdown-style-guide', 'using-mdx'].includes(post.slug || post.id))
     .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
 ---
 
@@ -16,7 +17,6 @@ const posts = allPosts
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-			/* Main container styles */
 			main {
 				width: 100%;
 				max-width: 960px;
@@ -24,7 +24,6 @@ const posts = allPosts
 				padding: 2rem;
 			}
 
-			/* Header styles */
 			h1 {
 				font-size: 2.5rem;
 				color: #2c3e50;
@@ -36,21 +35,18 @@ const posts = allPosts
 				font-size: 1.2rem;
 			}
 
-			/* Welcome message */
 			p {
 				color: #666;
 				line-height: 1.6;
 				margin: 1.5rem 0;
 			}
 
-			/* Posts section */
 			h3 {
 				color: #2c3e50;
 				margin: 2rem 0 1.5rem;
 				font-size: 1.8rem;
 			}
 
-			/* Post list styles */
 			ul {
 				list-style: none;
 				padding: 0;
@@ -71,7 +67,6 @@ const posts = allPosts
 				box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 			}
 
-			/* Post preview styles */
 			a {
 				text-decoration: none;
 				color: inherit;
@@ -84,7 +79,6 @@ const posts = allPosts
 				margin-bottom: 0.5rem;
 			}
 
-			/* Post metadata */
 			.post-description {
 				color: #666;
 				line-height: 1.6;
@@ -97,7 +91,6 @@ const posts = allPosts
 				margin-top: 1rem;
 			}
 
-			/* Responsive adjustments */
 			@media (max-width: 768px) {
 				main {
 					padding: 1rem;
@@ -124,15 +117,18 @@ const posts = allPosts
 			<h3>Latest Posts</h3>
 			<ul>
 				{
-					posts.map((post) => (
-						<li>
-							<a href={`/blog/${post.slug}/`}>
-								<h4>{post.data.title}</h4>
-								<p class="post-description">{post.data.description}</p>
-								<p class="post-date">Published: {new Date(post.data.pubDate).toLocaleDateString()}</p>
-							</a>
-						</li>
-					))
+					posts.map((post) => {
+						const slug = post.slug || post.id;
+						return (
+							<li>
+								<a href={`/blog/${slug}/`}>
+									<h4>{post.data.title}</h4>
+									<p class="post-description">{post.data.description}</p>
+									<p class="post-date">Published: {new Date(post.data.pubDate).toLocaleDateString()}</p>
+								</a>
+							</li>
+						);
+					})
 				}
 			</ul>
 		</main>
