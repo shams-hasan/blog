@@ -31,6 +31,7 @@ const books = await getCollection('book');
                 border-radius: 12px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 transition: transform 0.2s ease, box-shadow 0.2s ease;
+                margin-left: -.75rem;
             }
 
             .book-item:hover {
@@ -43,6 +44,7 @@ const books = await getCollection('book');
                 color: #2c3e50;
                 font-size: 1.5rem;
                 text-decoration: none;
+
             }
 
             .book-author {
@@ -99,7 +101,7 @@ const books = await getCollection('book');
                     books.map((book) => (
                         <li class="book-item">
                             <a href={`/reading-list/${book.slug}/`} class="book-title">
-                                {book.data.title} <span class="book-author">By {book.data.author}</span>
+                                {book.data.title} <br> <span class="book-author"> {book.data.author}</span>
                             </a>
                             <p class="book-rating">
                                 Rating: 

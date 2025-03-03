@@ -58,13 +58,14 @@ const posts = allPosts
 				padding: 1.5rem;
 				background: white;
 				border-radius: 12px;
-				box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 				transition: transform 0.2s ease, box-shadow 0.2s ease;
+				margin-left: -1rem;
 			}
 
 			li:hover {
 				transform: translateY(-3px);
-				box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 			}
 
 			a {
@@ -91,17 +92,46 @@ const posts = allPosts
 				margin-top: 1rem;
 			}
 
+			/* Mobile styles */
 			@media (max-width: 768px) {
 				main {
-					padding: 1rem;
+					padding: 1rem; /* Reduce padding for smaller screens */
 				}
 
 				h1 {
-					font-size: 2rem;
+					font-size: 2rem; /* Reduce font size for smaller screens */
+				}
+
+				span {
+					font-size: 1rem; /* Adjust subtitle font size */
+				}
+
+				p {
+					font-size: 0.9rem; /* Adjust paragraph font size */
+					margin: 1rem 0; /* Reduce margin for smaller screens */
+				}
+
+				h3 {
+					font-size: 1.5rem; /* Reduce heading font size */
+					margin: 1.5rem 0 1rem; /* Adjust margin for smaller screens */
 				}
 
 				li {
-					padding: 1rem;
+					padding: 1rem; /* Reduce padding for smaller screens */
+					margin: 1rem 0; /* Reduce margin for smaller screens */
+					margin-left: 0; /* Remove negative margin for better alignment */
+				}
+
+				h4 {
+					font-size: 1.2rem; /* Reduce font size for post titles */
+				}
+
+				.post-description {
+					font-size: 0.9rem; /* Adjust description font size */
+				}
+
+				.post-date {
+					font-size: 0.8rem; /* Adjust date font size */
 				}
 			}
 		</style>
