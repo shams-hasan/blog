@@ -1,0 +1,114 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+    const books = await getCollection('book');
+    return books.map((book) => ({
+        params: { slug: book.slug },
+        props: { book },
+    }));
+}
+
+const { book } = Astro.props;
+const { Content } = await book.render();
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={book.data.title} description={book.data.review} />
+        <style>
+            main {
+                width: 100%;
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .book-header {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+                border-bottom: 2px solid #eee;
+            }
+
+            .book-header h1 {
+                font-size: 2.5rem;
+                color: #2c3e50;
+                margin-bottom: 1rem;
+            }
+
+            .book-author {
+                color: #666;
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .book-rating {
+                color: #888;
+                font-size: 0.9rem;
+            }
+
+            .book-review {
+                line-height: 1.8;
+                color: #2c3e50;
+            }
+
+            .book-review :global(p) {
+                margin-bottom: 1.5rem;
+            }
+
+            .stars {
+                display: inline-block;
+                color: #ccc; /* Default star color (unfilled) */
+                font-size: 1.2rem;
+            }
+
+            .star {
+                cursor: pointer;
+                transition: color 0.2s ease;
+            }
+
+            .star.filled {
+                color: gold; 
+            }
+
+            @media (max-width: 768px) {
+                main {
+                    padding: 1rem;
+                }
+
+                .book-header h1 {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <Header />
+        <main>
+            <div class="book-header">
+                <h1>{book.data.title}</h1>
+                <p class="book-author">By {book.data.author}</p>
+                <p class="book-rating">
+                    Rating: 
+                    <span class="stars">
+                        {
+                            [...Array(5)].map((_, i) => (
+                                <span class={`star ${i < book.data.rating ? 'filled' : ''}`}>★</span>
+                            ))
+                        }
+                    </span>
+                    ({book.data.rating}/5)
+                </p>
+            </div>
+            <article class="book-review">
+                {book.data.review}
+                <Content />
+            </article>
+        </main>
+        <Footer />
+    </body>
+</html>

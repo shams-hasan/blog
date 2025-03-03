@@ -122,9 +122,7 @@ const posts = allPosts
 						return (
 							<li>
 								<a href={`/blog/${slug}/`}>
-									<h4>{post.data.title}</h4>
-									<p class="post-description">{post.data.description}</p>
-									<p class="post-date">Published: {new Date(post.data.pubDate).toLocaleDateString()}</p>
+									<u><h4>{post.data.title}</h4></u>
 								</a>
 							</li>
 						);
